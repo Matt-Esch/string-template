@@ -3,27 +3,48 @@
 
   A simple string template function based on named or indexed arguments
 
-## License 
+## Example
 
-(The MIT License)
+```js
+var format = require("string-template")
+var greeting
 
-Copyright (c) 2013 Matthew Esch &lt;matt@mattesch.info&gt;
+// Format using an object hash with keys matching [0-9a-zA-Z]+
 
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
+greeting = format("Hello {name}, you have have {count} unread messages", {
+    name: "Robert",
+    count: 12
+})
+// greeting -> "Hello Robert, you have 12 unread messages"
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Format using a number indexed array
+
+greeting = format("Hello {0}, you have {1} unread messages", ["Robert", 12])
+// greeting -> "Hello Robert, you have 12 unread messages"
+
+
+// Format using optional arguments
+
+greeting = format("Hello {0}, you have {1} unread messages",
+     "Robert",
+     12)
+// greeting -> "Hello Robert, you have 12 unread messages"
+
+
+// Escape {} pairs by using double {{}}
+
+var text = format("{{0}}")
+// text -> "{0}"
+
+```
+
+## Installation
+
+`npm install string-template`
+
+## Contributors
+
+ - Matt-Esch
+
+## MIT Licenced
