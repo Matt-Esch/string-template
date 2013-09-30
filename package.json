@@ -33,7 +33,10 @@
     }
   ],
   "scripts": {
-    "test": "node ./test/index.js"
+    "test": "node ./test/index.js",
+    "travis-test": "istanbul cover ./test/index.js && ((cat coverage/lcov.info | coveralls) || exit 0)",
+    "cover": "istanbul cover --report none --print detail ./test/index.js",
+    "view-cover": "istanbul report html && google-chrome ./coverage/index.html"
   },
   "testling": {
     "files": "test/index.js",
