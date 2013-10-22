@@ -16,7 +16,7 @@ var greeting
 
 // Format using an object hash with keys matching [0-9a-zA-Z]+
 
-greeting = format("Hello {name}, you have have {count} unread messages", {
+greeting = format("Hello {name}, you have {count} unread messages", {
     name: "Robert",
     count: 12
 })
