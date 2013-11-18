@@ -176,3 +176,17 @@ test("Undefined keys become 0 characters", function (assert) {
     assert.equal(result3, "Hello")
     assert.end()
 })
+
+test("Works across multline strings", function (assert) {
+    var result1 = format("{zero}\n{one}\n{two}", {
+        zero: "A",
+        one: "B",
+        two: "C"
+    })
+    var result2 = format("{0}\n{1}\n{2}", ["A", "B", "C"])
+    var result3 = format("{0}\n{1}\n{2}", "A", "B", "C")
+    assert.equal(result1, "A\nB\nC")
+    assert.equal(result2, "A\nB\nC")
+    assert.equal(result3, "A\nB\nC")
+    assert.end()
+})
