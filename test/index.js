@@ -190,3 +190,24 @@ test("Works across multline strings", function (assert) {
     assert.equal(result3, "A\nB\nC")
     assert.end()
 })
+
+test("Allow multiple references", function (assert) {
+    var result1 = format("{a}{b}{c}\n{a}{b}{c}\n{a}{b}{c}", {
+        a: "one",
+        b: "two",
+        c: "three"
+    })
+    var result2 = format("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}", [
+        "one",
+        "two",
+        "three"
+    ])
+    var result3 = format("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}",
+        "one",
+        "two",
+        "three")
+    assert.equal(result1, "onetwothree\nonetwothree\nonetwothree")
+    assert.equal(result2, "onetwothree\nonetwothree\nonetwothree")
+    assert.equal(result3, "onetwothree\nonetwothree\nonetwothree")
+    assert.end()
+})
