@@ -48,7 +48,11 @@ function compile(string, inline) {
         }
     }
 
-    replace = replace.reduce(function (prev, curr) {
+    var prev = [""]
+
+    for (var j = 0; j < replace.length; j++) {
+        var curr = replace[j]
+
         if (String(curr) === curr) {
             var top = prev[prev.length - 1]
 
@@ -60,12 +64,22 @@ function compile(string, inline) {
         } else {
             prev.push(curr)
         }
+    }
 
-        return prev
-    }, [""])
+    replace = prev
 
     if (inline) {
-        var replaceCode = replace.map(inlineConcat).join(" +\n    ")
+        for (var k = 0; k < replace.length; k++) {
+            var token = replace[k]
+
+            if (String(token) === token) {
+                replace[k] = template(literalTemplate, escape(token))
+            } else {
+                replace[k] = template(argTemplate, escape(token.name))
+            }
+        }
+
+        var replaceCode = replace.join(" +\n    ")
         var compiledSource = template(replaceTemplate, replaceCode)
         return new Function(compiledSource)
     }
@@ -102,9 +116,5 @@ function compile(string, inline) {
 }
 
 function inlineConcat(token) {
-    if (String(token) === token) {
-        return template(literalTemplate, escape(token))
-    } else {
-        return template(argTemplate, escape(token.name))
-    }
+
 }
