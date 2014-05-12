@@ -5,7 +5,7 @@ module.exports = template
 
 function template(string) {
     var args
-    
+
     if (arguments.length === 2 && typeof arguments[1] === "object") {
         args = arguments[1]
     } else {
