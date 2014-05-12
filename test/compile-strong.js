@@ -1,16 +1,18 @@
 var test = require("tape")
 
-var format = require("../index.js")
+var compile = require("../compile.js")
 
 test("Named arguments are replaced", function (assert) {
-    var result = format("Hello {name}, how are you?", { name: "Mark" })
+    var template = compile("Hello {name}, how are you?", true)
+    var result = template({ name: "Mark" })
     assert.equal(result, "Hello Mark, how are you?")
     assert.end()
 })
 
 test("Named arguments at the start of strings are replaced",
     function (assert) {
-        var result = format("{likes} people have liked this", {
+        var template = compile("{likes} people have liked this", true)
+        var result = template({
             likes: 123
         })
 
@@ -20,7 +22,8 @@ test("Named arguments at the start of strings are replaced",
 
 test("Named arguments at the end of string are replaced",
     function (assert) {
-        var result = format("Please respond by {date}", {
+        var template = compile("Please respond by {date}", true)
+        var result = template({
             date: "01/01/2015"
         })
 
@@ -29,7 +32,8 @@ test("Named arguments at the end of string are replaced",
     })
 
 test("Multiple named arguments are replaced", function (assert) {
-    var result = format("Hello {name}, you have {emails} new messages", {
+    var template = compile("Hello {name}, you have {emails} new messages", true)
+    var result = template( {
         name: "Anna",
         emails: 5
     })
@@ -39,41 +43,45 @@ test("Multiple named arguments are replaced", function (assert) {
 })
 
 test("Missing named arguments become 0 characters", function (assert) {
-    var result = format("Hello{name}, how are you?", {})
+    var template = compile("Hello{name}, how are you?", true)
+    var result = template({})
     assert.equal(result, "Hello, how are you?")
     assert.end()
 })
 
 test("Named arguments can be escaped", function (assert) {
-    var result = format("Hello {{name}}, how are you?", { name: "Mark" })
+    var template = compile("Hello {{name}}, how are you?", true)
+    var result = template({ name: "Mark" })
     assert.equal(result, "Hello {name}, how are you?")
     assert.end()
 })
 
 test("Array arguments are replaced", function (assert) {
-    var result = format("Hello {0}, how are you?", ["Mark"])
+    var template = compile("Hello {0}, how are you?", true)
+    var result = template(["Mark"])
     assert.equal(result, "Hello Mark, how are you?")
     assert.end()
 })
 
 test("Array arguments at the start of strings are replaced",
     function (assert) {
-        var result = format("{0} people have liked this", [123])
-
+        var template = compile("{0} people have liked this", true)
+        var result = template([123])
         assert.equal(result, "123 people have liked this")
         assert.end()
     })
 
 test("Array arguments at the end of string are replaced",
     function (assert) {
-        var result = format("Please respond by {0}", ["01/01/2015"])
-
+        var template = compile("Please respond by {0}", true)
+        var result = template(["01/01/2015"])
         assert.equal(result, "Please respond by 01/01/2015")
         assert.end()
     })
 
 test("Multiple array arguments are replaced", function (assert) {
-    var result = format("Hello {0}, you have {1} new messages", [
+    var template = compile("Hello {0}, you have {1} new messages", true)
+    var result = template([
         "Anna",
         5
     ])
@@ -83,84 +91,96 @@ test("Multiple array arguments are replaced", function (assert) {
 })
 
 test("Missing array arguments become 0 characters", function (assert) {
-    var result = format("Hello{0}, how are you?", [])
+    var template = compile("Hello{0}, how are you?", true)
+    var result = template([])
     assert.equal(result, "Hello, how are you?")
     assert.end()
 })
 
 test("Array arguments can be escaped", function (assert) {
-    var result = format("Hello {{0}}, how are you?", ["Mark"])
+    var template = compile("Hello {{0}}, how are you?", true)
+    var result = template(["Mark"])
     assert.equal(result, "Hello {0}, how are you?")
     assert.end()
 })
 
 test("Array keys are not accessible", function (assert) {
-    var result = format("Function{splice}", [])
+    var template = compile("Function{splice}", true)
+    var result = template([])
     assert.equal(result, "Function")
     assert.end()
 })
 
 test("Listed arguments are replaced", function (assert) {
-    var result = format("Hello {0}, how are you?", "Mark")
+    var template = compile("Hello {0}, how are you?", true)
+    var result = template("Mark")
     assert.equal(result, "Hello Mark, how are you?")
     assert.end()
 })
 
 test("Listed arguments at the start of strings are replaced",
     function (assert) {
-        var result = format("{0} people have liked this", 123)
-
+        var template = compile("{0} people have liked this", true)
+        var result = template(123)
         assert.equal(result, "123 people have liked this")
         assert.end()
     })
 
 test("Listed arguments at the end of string are replaced",
     function (assert) {
-        var result = format("Please respond by {0}", "01/01/2015")
-
+        var template = compile("Please respond by {0}", true)
+        var result = template("01/01/2015")
         assert.equal(result, "Please respond by 01/01/2015")
         assert.end()
     })
 
 test("Multiple listed arguments are replaced", function (assert) {
-    var result = format("Hello {0}, you have {1} new messages",
-        "Anna",
-        5)
-
+    var template = compile("Hello {0}, you have {1} new messages", true)
+    var result = template("Anna", 5)
     assert.equal(result, "Hello Anna, you have 5 new messages")
     assert.end()
 })
 
 test("Missing listed arguments become 0 characters", function (assert) {
-    var result = format("Hello{1}, how are you?", "no")
+    var template = compile("Hello{1}, how are you?", true)
+    var result = template("no")
     assert.equal(result, "Hello, how are you?")
     assert.end()
 })
 
 test("Listed arguments can be escaped", function (assert) {
-    var result = format("Hello {{0}}, how are you?", "Mark")
+    var template = compile("Hello {{0}}, how are you?", true)
+    var result = template( "Mark")
     assert.equal(result, "Hello {0}, how are you?")
     assert.end()
 })
 
 test("Allow null data", function (assert) {
-    var result = format("Hello{0}", null)
+    var template = compile("Hello{0}", true)
+    var result = template(null)
     assert.equal(result, "Hello")
     assert.end()
 })
 
 test("Allow undefined data", function (assert) {
-    var result1 = format("Hello{0}")
-    var result2 = format("Hello{0}", undefined)
+    var template = compile("Hello{0}", true)
+    var result1 = template()
+    var result2 = template(undefined)
     assert.equal(result1, "Hello")
     assert.equal(result2, "Hello")
     assert.end()
 })
 
 test("Null keys become 0 characters", function (assert) {
-    var result1 = format("Hello{name}", { name: null })
-    var result2 = format("Hello{0}", [null])
-    var result3 = format("Hello{0}{1}{2}", null, null, null)
+    var template1 = compile("Hello{name}", true)
+    var result1 = template1({ name: null })
+
+    var template2 = compile("Hello{0}", true)
+    var result2 = template2([null])
+
+    var template3 = compile("Hello{0}{1}{2}", true)
+    var result3 = template3(null, null, null)
+
     assert.equal(result1, "Hello")
     assert.equal(result2, "Hello")
     assert.equal(result3, "Hello")
@@ -168,9 +188,15 @@ test("Null keys become 0 characters", function (assert) {
 })
 
 test("Undefined keys become 0 characters", function (assert) {
-    var result1 = format("Hello{firstName}{lastName}", { name: undefined })
-    var result2 = format("Hello{0}{1}", [undefined])
-    var result3 = format("Hello{0}{1}{2}", undefined, undefined)
+    var template1 = compile("Hello{firstName}{lastName}", true)
+    var result1 = template1({ name: undefined })
+
+    var template2 = compile("Hello{0}{1}", true)
+    var result2 = template2([undefined])
+
+    var template3 = compile("Hello{0}{1}{2}", true)
+    var result3 = template3(undefined, undefined)
+
     assert.equal(result1, "Hello")
     assert.equal(result2, "Hello")
     assert.equal(result3, "Hello")
@@ -178,13 +204,19 @@ test("Undefined keys become 0 characters", function (assert) {
 })
 
 test("Works across multline strings", function (assert) {
-    var result1 = format("{zero}\n{one}\n{two}", {
+    var template1 = compile("{zero}\n{one}\n{two}", true)
+    var result1 = template1({
         zero: "A",
         one: "B",
         two: "C"
     })
-    var result2 = format("{0}\n{1}\n{2}", ["A", "B", "C"])
-    var result3 = format("{0}\n{1}\n{2}", "A", "B", "C")
+
+    var template2 = compile("{0}\n{1}\n{2}", true)
+    var result2 = template2(["A", "B", "C"])
+
+    var template3 = compile("{0}\n{1}\n{2}", true)
+    var result3 = template3("A", "B", "C")
+
     assert.equal(result1, "A\nB\nC")
     assert.equal(result2, "A\nB\nC")
     assert.equal(result3, "A\nB\nC")
@@ -192,20 +224,26 @@ test("Works across multline strings", function (assert) {
 })
 
 test("Allow multiple references", function (assert) {
-    var result1 = format("{a}{b}{c}\n{a}{b}{c}\n{a}{b}{c}", {
+    var template1 = compile("{a}{b}{c}\n{a}{b}{c}\n{a}{b}{c}", true)
+    var result1 = template1({
         a: "one",
         b: "two",
         c: "three"
     })
-    var result2 = format("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}", [
+
+    var template2 = compile("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}", true)
+    var result2 = template2([
         "one",
         "two",
         "three"
     ])
-    var result3 = format("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}",
+
+    var template3 = compile("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}", true)
+    var result3 = template3(
         "one",
         "two",
         "three")
+
     assert.equal(result1, "onetwothree\nonetwothree\nonetwothree")
     assert.equal(result2, "onetwothree\nonetwothree\nonetwothree")
     assert.equal(result3, "onetwothree\nonetwothree\nonetwothree")
