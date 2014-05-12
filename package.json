@@ -23,7 +23,7 @@
     "email": "matt@mattesch.info"
   },
   "dependencies": {
-    "js-string-escape": "^1.0.0"
+    "js-string-escape": "~1.0.0"
   },
   "devDependencies": {
     "tape": "~1.1.1"
