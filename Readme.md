@@ -44,6 +44,36 @@ var text = format("{{0}}")
 
 ```
 
+## Compiling templates
+
+`string-template` exposes two template compiling options for when you need the
+additional performance. Arguments passed to the compiled template are of the
+same structure as the main `string-template` function, so either a single
+object/array or a list of arguments.
+
+```js
+var compile = require("string-template/compile")
+
+var greetingTemplate = compile("Hello {0}, you have {1} unread messages")
+
+var greeting = greetingTemplate("Robert", 12)
+// -> "Hello Robert, you have 12 unread messages"
+```
+
+Passing a truthy second argument to `compile` will opt into using `new Function`
+to generate a function. The function returned contains a literal string
+concatenation statement, interleaving the correct arguments you have passed in.
+
+```js
+var compile = require("string-template/compile")
+
+var greetingTemplate = compile("Hello {0}, you have {1} unread messages", true)
+// -> greetingTemplate generated using new Function
+
+var greeting = greetingTemplate(["Robert", 12])
+// -> "Hello Robert, you have 12 unread messages"
+```
+
 ## Installation
 
 `npm install string-template`
