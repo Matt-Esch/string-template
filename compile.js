@@ -73,15 +73,15 @@ function compile(string, inline) {
             var token = replace[k]
 
             if (String(token) === token) {
-                replace[k] = template(literalTemplate, escape(token))
+                replace[k] = template.process(literalTemplate, escape(token))
             } else {
-                replace[k] = template(argTemplate, escape(token.name))
+                replace[k] = template.process(argTemplate, escape(token.name))
             }
         }
 
         var replaceCode = replace.join(" +\n    ")
-        var compiledSource = template(replaceTemplate, replaceCode)
-        return new Function(compiledSource)
+        var compiledSource = template.process(replaceTemplate, replaceCode);
+        return new Function(compiledSource);
     }
 
     return function template() {
