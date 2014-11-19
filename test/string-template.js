@@ -1,16 +1,16 @@
 var test = require("tape")
 
-var template = require("../index.js")
+var format = require("../index.js")
 
 test("Named arguments are replaced", function (assert) {
-    var result = template.process("Hello {name}, how are you?", { name: "Mark" })
+    var result = format("Hello {name}, how are you?", { name: "Mark" })
     assert.equal(result, "Hello Mark, how are you?")
     assert.end()
 })
 
 test("Named arguments at the start of strings are replaced",
     function (assert) {
-        var result = template.process("{likes} people have liked this", {
+        var result = format("{likes} people have liked this", {
             likes: 123
         })
 
@@ -20,7 +20,7 @@ test("Named arguments at the start of strings are replaced",
 
 test("Named arguments at the end of string are replaced",
     function (assert) {
-        var result = template.process("Please respond by {date}", {
+        var result = format("Please respond by {date}", {
             date: "01/01/2015"
         })
 
@@ -29,7 +29,7 @@ test("Named arguments at the end of string are replaced",
     })
 
 test("Multiple named arguments are replaced", function (assert) {
-    var result = template.process("Hello {name}, you have {emails} new messages", {
+    var result = format("Hello {name}, you have {emails} new messages", {
         name: "Anna",
         emails: 5
     })
@@ -39,26 +39,26 @@ test("Multiple named arguments are replaced", function (assert) {
 })
 
 test("Missing named arguments become 0 characters", function (assert) {
-    var result = template.process("Hello{name}, how are you?", {})
+    var result = format("Hello{name}, how are you?", {})
     assert.equal(result, "Hello, how are you?")
     assert.end()
 })
 
 test("Named arguments can be escaped", function (assert) {
-    var result = template.process("Hello {{name}}, how are you?", { name: "Mark" })
+    var result = format("Hello {{name}}, how are you?", { name: "Mark" })
     assert.equal(result, "Hello {name}, how are you?")
     assert.end()
 })
 
 test("Array arguments are replaced", function (assert) {
-    var result = template.process("Hello {0}, how are you?", ["Mark"])
+    var result = format("Hello {0}, how are you?", ["Mark"])
     assert.equal(result, "Hello Mark, how are you?")
     assert.end()
 })
 
 test("Array arguments at the start of strings are replaced",
     function (assert) {
-        var result = template.process("{0} people have liked this", [123])
+        var result = format("{0} people have liked this", [123])
 
         assert.equal(result, "123 people have liked this")
         assert.end()
@@ -66,14 +66,14 @@ test("Array arguments at the start of strings are replaced",
 
 test("Array arguments at the end of string are replaced",
     function (assert) {
-        var result = template.process("Please respond by {0}", ["01/01/2015"])
+        var result = format("Please respond by {0}", ["01/01/2015"])
 
         assert.equal(result, "Please respond by 01/01/2015")
         assert.end()
     })
 
 test("Multiple array arguments are replaced", function (assert) {
-    var result = template.process("Hello {0}, you have {1} new messages", [
+    var result = format("Hello {0}, you have {1} new messages", [
         "Anna",
         5
     ])
@@ -83,32 +83,32 @@ test("Multiple array arguments are replaced", function (assert) {
 })
 
 test("Missing array arguments become 0 characters", function (assert) {
-    var result = template.process("Hello{0}, how are you?", [])
+    var result = format("Hello{0}, how are you?", [])
     assert.equal(result, "Hello, how are you?")
     assert.end()
 })
 
 test("Array arguments can be escaped", function (assert) {
-    var result = template.process("Hello {{0}}, how are you?", ["Mark"])
+    var result = format("Hello {{0}}, how are you?", ["Mark"])
     assert.equal(result, "Hello {0}, how are you?")
     assert.end()
 })
 
 test("Array keys are not accessible", function (assert) {
-    var result = template.process("Function{splice}", [])
+    var result = format("Function{splice}", [])
     assert.equal(result, "Function")
     assert.end()
 })
 
 test("Listed arguments are replaced", function (assert) {
-    var result = template.process("Hello {0}, how are you?", "Mark")
+    var result = format("Hello {0}, how are you?", "Mark")
     assert.equal(result, "Hello Mark, how are you?")
     assert.end()
 })
 
 test("Listed arguments at the start of strings are replaced",
     function (assert) {
-        var result = template.process("{0} people have liked this", 123)
+        var result = format("{0} people have liked this", 123)
 
         assert.equal(result, "123 people have liked this")
         assert.end()
@@ -116,14 +116,14 @@ test("Listed arguments at the start of strings are replaced",
 
 test("Listed arguments at the end of string are replaced",
     function (assert) {
-        var result = template.process("Please respond by {0}", "01/01/2015")
+        var result = format("Please respond by {0}", "01/01/2015")
 
         assert.equal(result, "Please respond by 01/01/2015")
         assert.end()
     })
 
 test("Multiple listed arguments are replaced", function (assert) {
-    var result = template.process("Hello {0}, you have {1} new messages",
+    var result = format("Hello {0}, you have {1} new messages",
         "Anna",
         5)
 
@@ -132,35 +132,35 @@ test("Multiple listed arguments are replaced", function (assert) {
 })
 
 test("Missing listed arguments become 0 characters", function (assert) {
-    var result = template.process("Hello{1}, how are you?", "no")
+    var result = format("Hello{1}, how are you?", "no")
     assert.equal(result, "Hello, how are you?")
     assert.end()
 })
 
 test("Listed arguments can be escaped", function (assert) {
-    var result = template.process("Hello {{0}}, how are you?", "Mark")
+    var result = format("Hello {{0}}, how are you?", "Mark")
     assert.equal(result, "Hello {0}, how are you?")
     assert.end()
 })
 
 test("Allow null data", function (assert) {
-    var result = template.process("Hello{0}", null)
+    var result = format("Hello{0}", null)
     assert.equal(result, "Hello")
     assert.end()
 })
 
 test("Allow undefined data", function (assert) {
-    var result1 = template.process("Hello{0}")
-    var result2 = template.process("Hello{0}", undefined)
+    var result1 = format("Hello{0}")
+    var result2 = format("Hello{0}", undefined)
     assert.equal(result1, "Hello")
     assert.equal(result2, "Hello")
     assert.end()
 })
 
 test("Null keys become 0 characters", function (assert) {
-    var result1 = template.process("Hello{name}", { name: null })
-    var result2 = template.process("Hello{0}", [null])
-    var result3 = template.process("Hello{0}{1}{2}", null, null, null)
+    var result1 = format("Hello{name}", { name: null })
+    var result2 = format("Hello{0}", [null])
+    var result3 = format("Hello{0}{1}{2}", null, null, null)
     assert.equal(result1, "Hello")
     assert.equal(result2, "Hello")
     assert.equal(result3, "Hello")
@@ -168,9 +168,9 @@ test("Null keys become 0 characters", function (assert) {
 })
 
 test("Undefined keys become 0 characters", function (assert) {
-    var result1 = template.process("Hello{firstName}{lastName}", { name: undefined })
-    var result2 = template.process("Hello{0}{1}", [undefined])
-    var result3 = template.process("Hello{0}{1}{2}", undefined, undefined)
+    var result1 = format("Hello{firstName}{lastName}", { name: undefined })
+    var result2 = format("Hello{0}{1}", [undefined])
+    var result3 = format("Hello{0}{1}{2}", undefined, undefined)
     assert.equal(result1, "Hello")
     assert.equal(result2, "Hello")
     assert.equal(result3, "Hello")
@@ -178,13 +178,13 @@ test("Undefined keys become 0 characters", function (assert) {
 })
 
 test("Works across multline strings", function (assert) {
-    var result1 = template.process("{zero}\n{one}\n{two}", {
+    var result1 = format("{zero}\n{one}\n{two}", {
         zero: "A",
         one: "B",
         two: "C"
     })
-    var result2 = template.process("{0}\n{1}\n{2}", ["A", "B", "C"])
-    var result3 = template.process("{0}\n{1}\n{2}", "A", "B", "C")
+    var result2 = format("{0}\n{1}\n{2}", ["A", "B", "C"])
+    var result3 = format("{0}\n{1}\n{2}", "A", "B", "C")
     assert.equal(result1, "A\nB\nC")
     assert.equal(result2, "A\nB\nC")
     assert.equal(result3, "A\nB\nC")
@@ -192,17 +192,17 @@ test("Works across multline strings", function (assert) {
 })
 
 test("Allow multiple references", function (assert) {
-    var result1 = template.process("{a}{b}{c}\n{a}{b}{c}\n{a}{b}{c}", {
+    var result1 = format("{a}{b}{c}\n{a}{b}{c}\n{a}{b}{c}", {
         a: "one",
         b: "two",
         c: "three"
     })
-    var result2 = template.process("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}", [
+    var result2 = format("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}", [
         "one",
         "two",
         "three"
     ])
-    var result3 = template.process("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}",
+    var result3 = format("{0}{1}{2}\n{0}{1}{2}\n{0}{1}{2}",
         "one",
         "two",
         "three")
@@ -211,32 +211,3 @@ test("Allow multiple references", function (assert) {
     assert.equal(result3, "onetwothree\nonetwothree\nonetwothree")
     assert.end()
 })
-
-
-
-
-test("Changing open/close tags works", function (assert) {
-   var objs = {
-       name: "Nicolas",
-       age: "31",
-       city: "Paris" };
-
-   template.setOpenCloseTags( "{", "}" );
-   var result = template.process( "Hello {name}, I hear you come from {{city}}?", objs );
-   assert.equal(result, "Hello Nicolas, I hear you come from {city}?");
-
-   template.setOpenCloseTags( "{{", "}}" );
-   result = template.process( "Hello {name}, I hear you come from {{city}}?", objs );
-   assert.equal(result, "Hello {name}, I hear you come from Paris?");
-
-   template.setOpenCloseTags( "<%=", "%>" );
-   result = template.process( "Hello {name}, I hear you come from {{city}}?", objs );
-   assert.equal(result, "Hello {name}, I hear you come from {{city}}?");
-
-   // restorin standard open/close tags for following tests
-   template.setOpenCloseTags( "{", "}" );
-
-   assert.end();
-});
-
-
