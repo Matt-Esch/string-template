@@ -1,4 +1,4 @@
-var nargs = /\{([0-9a-zA-Z]+)\}/g
+var nargs = /\{(\[[\s\w,\.:;\!\@\#\$\%\&\*\(\)\-\+\=\'\"\/<>\^]+\])?([0-9a-zA-Z]+)(\[[\s\w,\.:;\!\@\#\$\%\&\*\(\)\-\+\=\'\"\/<>\^]+\])?\}/g
 var slice = Array.prototype.slice
 
 module.exports = template
@@ -16,7 +16,7 @@ function template(string) {
         args = {}
     }
 
-    return string.replace(nargs, function replaceArg(match, i, index) {
+    return string.replace(nargs, function replaceArg(match, l, i, r, index) {
         var result
 
         if (string[index - 1] === "{" &&
@@ -26,6 +26,14 @@ function template(string) {
             result = args.hasOwnProperty(i) ? args[i] : null
             if (result === null || result === undefined) {
                 return ""
+            }
+            if (l) {
+                l = l.replace(/\[|\]/g, '')
+                result = l + result
+            }
+            if (r) {
+                r = r.replace(/\[|\]/g, '')
+                result = result + r
             }
 
             return result
