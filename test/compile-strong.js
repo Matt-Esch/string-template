@@ -249,3 +249,71 @@ test("Allow multiple references", function (assert) {
     assert.equal(result3, "onetwothree\nonetwothree\nonetwothree")
     assert.end()
 })
+
+test("Attach strings to variables in template (with object)", function (assert) {
+    var template1 = compile("Hello{[, ]name}!", true)
+    var result1 = format(template1, {
+        name: "Mark"
+    })
+
+    var template2 = compile("Hello, {name[ San]}!", true)
+    var result2 = format(template2, {
+        name: "Mark"
+    })
+
+    var template3 = compile("Hello{[, my name is ]name[ and I like JavaScript]}!", true)
+    var result3 = format(template3, {
+        name: "Mark"
+    })
+
+    var template4 = compile("Hello{[, ]name}!", true)
+    var result4 = format(template14, {
+        someotherkey: "Mark"
+    })
+
+    assert.equal(result1, "Hello, Mark!")
+    assert.equal(result2, "Hello, Mark San!")
+    assert.equal(result3, "Hello, my name is Mark and I like JavaScript!")
+    assert.equal(result4, "Hello!")
+    assert.end()
+})
+
+test("Attach strings to variables in template (with array)", function (assert) {
+    var template1 = compile("Hello{[, ]name}!", true)
+    var result1 = format(template1, ["Mark"])
+
+    var template2 = compile("Hello, {name[ San]}!", true)
+    var result2 = format(template2, ["Mark"])
+
+    var template3 = compile("Hello{[, my name is ]name[ and I like JavaScript]}!", true)
+    var result3 = format(template3, ["Mark"])
+
+    var template4 = compile("Hello{[, ]name}!", true)
+    var result4 = format(template14, [])
+
+    assert.equal(result1, "Hello, Mark!")
+    assert.equal(result2, "Hello, Mark San!")
+    assert.equal(result3, "Hello, my name is Mark and I like JavaScript!")
+    assert.equal(result4, "Hello!")
+    assert.end()
+})
+
+test("Attach strings to variables in template (with list of arguments)", function (assert) {
+    var template1 = compile("Hello{[, ]name}!", true)
+    var result1 = format(template1, "Mark")
+
+    var template2 = compile("Hello, {name[ San]}!", true)
+    var result2 = format(template2, "Mark")
+
+    var template3 = compile("Hello{[, my name is ]name[ and I like JavaScript]}!", true)
+    var result3 = format(template3, "Mark")
+
+    var template4 = compile("Hello{[, ]name}!", true)
+    var result4 = format(template14)
+
+    assert.equal(result1, "Hello, Mark!")
+    assert.equal(result2, "Hello, Mark San!")
+    assert.equal(result3, "Hello, my name is Mark and I like JavaScript!")
+    assert.equal(result4, "Hello!")
+    assert.end()
+})
