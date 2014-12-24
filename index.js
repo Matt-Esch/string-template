@@ -1,4 +1,4 @@
-var nargs = /\{(\[[\s\w,\.:;\!\@\#\$\%\&\*\(\)\-\+\=\'\"\/<>\^]+\])?([0-9a-zA-Z]+)(\[[\s\w,\.:;\!\@\#\$\%\&\*\(\)\-\+\=\'\"\/<>\^]+\])?\}/g
+var nargs = /\{(\[.+\])?([0-9a-zA-Z]+)(\[.+\])?\}/g
 var slice = Array.prototype.slice
 
 module.exports = template
