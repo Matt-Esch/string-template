@@ -28,11 +28,11 @@ function template(string) {
                 return ""
             }
             if (l) {
-                l = l.replace(/\[|\]/g, '')
+                l = l.replace(/\[|\]/g, "")
                 result = l + result
             }
             if (r) {
-                r = r.replace(/\[|\]/g, '')
+                r = r.replace(/\[|\]/g, "")
                 result = result + r
             }
 

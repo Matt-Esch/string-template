@@ -150,7 +150,7 @@ test("Missing listed arguments become 0 characters", function (assert) {
 
 test("Listed arguments can be escaped", function (assert) {
     var template = compile("Hello {{0}}, how are you?")
-    var result = template( "Mark")
+    var result = template("Mark")
     assert.equal(result, "Hello {0}, how are you?")
     assert.end()
 })
