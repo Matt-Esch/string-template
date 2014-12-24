@@ -1,7 +1,8 @@
 var template = require("./index")
 var escape = require("js-string-escape")
 
-var nargs = /\{[0-9a-zA-Z]+\}/g
+var nargs = /\{(?:\[.+\])?[0-9a-zA-Z]+(?:\[.+\])?\}/g
+var nargsCap = /\{(\[.+\])?([0-9a-zA-Z]+)(\[.+\])?\}/g
 
 var replaceTemplate =
 "    var args\n" +
@@ -33,17 +34,34 @@ function compile(string, inline) {
         var replacement = replacements[i];
         var escapeLeft = current.charAt(current.length - 1)
         var escapeRight = (interleave[i + 1] || "").charAt(0)
+        var attachLeft = ""
+        var attachRight = ""
+        var fullReplacement = ""
+        var subReplacement = ""
 
         if (replacement) {
-            replacement = replacement.substring(1, replacement.length - 1)
+            fullReplacement = replacement.substring(1, replacement.length - 1)
+            subReplacement = replacement.replace(nargsCap, function (match, l, i, r, index) {
+                if (l !== null && l !== undefined) {
+                    attachLeft = l.replace(/\[|\]/g, "")
+                }
+                if (r !== null && r !== undefined) {
+                    attachRight = r.replace(/\[|\]/g, "")
+                }
+                return i
+            })
         }
 
         if (escapeLeft === "{" && escapeRight === "}") {
-            replace.push(current + replacement)
+            replace.push(current + fullReplacement)
         } else {
             replace.push(current);
-            if (replacement) {
-                replace.push({ name: replacement })
+            if (subReplacement) {
+                replace.push({
+                    name: subReplacement,
+                    attachLeft: attachLeft,
+                    attachRight: attachRight
+                })
             }
         }
     }
@@ -104,9 +122,11 @@ function compile(string, inline) {
                 result.push(replace[i])
             } else {
                 var argName = replace[i].name
+                var attachLeft = replace[i].attachLeft
+                var attachRight = replace[i].attachRight
                 var arg = args.hasOwnProperty(argName) ? args[argName] : null
-                if (arg !== null || arg !== undefined) {
-                    result.push(arg)
+                if (arg !== null && arg !== undefined) {
+                    result.push(attachLeft + arg + attachRight)
                 }
             }
         }
