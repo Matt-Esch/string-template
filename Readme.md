@@ -44,6 +44,29 @@ var text = format("{{0}}")
 
 ```
 
+## Attaching prefix/postfix strings to a variable
+`string-template` allows you to define optional strings within a variable using square brackets as delimiters (e.g. `{[optional string]var_name[another string]}`). Attached strings are included only if there is a value assigned to its variable, making your templates much more flexible. A (somewhat contrived) example:
+
+```js
+var greetingTemplate = "Hello{[, ]name}!{[ You have ]msg[ new messages.]}"
+
+greeting = format(greetingTemplate, {
+    name: "Robert",
+    msg: "15"
+})
+// greeting -> "Hello, Robert! You have 15 new messages."
+
+greeting = format(greetingTemplate, {
+    name: "Robert"
+})
+// greeting -> "Hello, Robert!"
+
+greeting = format(greetingTemplate, {
+    msg: "100"
+})
+// greeting -> "Hello! You have 100 new messages."
+```
+
 ## Compiling templates
 
 `string-template` exposes two template compiling options for when you need the
@@ -81,6 +104,7 @@ var greeting = greetingTemplate(["Robert", 12])
 ## Contributors
 
  - Matt-Esch
+ - Alfonso Gómez-Arzola
 
 ## MIT Licenced
 
