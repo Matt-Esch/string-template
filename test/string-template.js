@@ -212,7 +212,7 @@ test("Allow multiple references", function (assert) {
     assert.end()
 })
 
-test("Attach strings to variables in template", function (assert) {
+test("Attach strings to variables in template (with object)", function (assert) {
     var result1 = format("Hello{[, ]name}!", {
         name: "Mark"
     })
@@ -225,6 +225,30 @@ test("Attach strings to variables in template", function (assert) {
     var result4 = format("Hello{[, ]name}!", {
         someotherkey: "Mark"
     })
+    assert.equal(result1, "Hello, Mark!")
+    assert.equal(result2, "Hello, Mark San!")
+    assert.equal(result3, "Hello, my name is Mark and I like JavaScript!")
+    assert.equal(result4, "Hello!")
+    assert.end()
+})
+
+test("Attach strings to variables in template (with array)", function (assert) {
+    var result1 = format("Hello{[, ]0}!", ["Mark"])
+    var result2 = format("Hello, {0[ San]}!", ["Mark"])
+    var result3 = format("Hello{[, my name is ]0[ and I like JavaScript]}!", ["Mark"])
+    var result4 = format("Hello{[, ]0}!", [])
+    assert.equal(result1, "Hello, Mark!")
+    assert.equal(result2, "Hello, Mark San!")
+    assert.equal(result3, "Hello, my name is Mark and I like JavaScript!")
+    assert.equal(result4, "Hello!")
+    assert.end()
+})
+
+test("Attach strings to variables in template (with list of arguments)", function (assert) {
+    var result1 = format("Hello{[, ]0}!", "Mark")
+    var result2 = format("Hello, {0[ San]}!", "Mark")
+    var result3 = format("Hello{[, my name is ]0[ and I like JavaScript]}!", "Mark")
+    var result4 = format("Hello{[, ]0}!")
     assert.equal(result1, "Hello, Mark!")
     assert.equal(result2, "Hello, Mark San!")
     assert.equal(result3, "Hello, my name is Mark and I like JavaScript!")
