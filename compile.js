@@ -20,7 +20,7 @@ var replaceTemplate =
 var literalTemplate = "\"{0}\""
 var argTemplate = "(result = args.hasOwnProperty(\"{0}\") ? " +
     "args[\"{0}\"] : null, \n        " +
-    "(result === null || result === undefined) ? \"\" : result)"
+    "(result === null || result === undefined) ? \"\" : \"{1}\" + result + \"{2}\")"
 
 module.exports = compile
 
@@ -93,7 +93,11 @@ function compile(string, inline) {
             if (String(token) === token) {
                 replace[k] = template(literalTemplate, escape(token))
             } else {
-                replace[k] = template(argTemplate, escape(token.name))
+                replace[k] = template(argTemplate,
+                    escape(token.name),
+                    escape(token.attachLeft),
+                    escape(token.attachRight)
+                )
             }
         }
 
