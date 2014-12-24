@@ -1,6 +1,6 @@
 {
   "name": "string-template",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A simple string template function based on named or indexed arguments",
   "keywords": [
     "template",
@@ -16,6 +16,8 @@
   "contributors": [
     {
       "name": "Matt-Esch"
+    },{
+      "name": "Alfonso Gómez-Arzola"
     }
   ],
   "bugs": {
