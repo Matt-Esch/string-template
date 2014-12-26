@@ -1,4 +1,5 @@
 var nargs = /\{(\[.+?\])?([0-9a-zA-Z]+)(\[.+?\])?\}/g
+var brackets = /(^\[|\]$)/g
 var slice = Array.prototype.slice
 
 module.exports = template
@@ -28,11 +29,11 @@ function template(string) {
                 return ""
             }
             if (l) {
-                l = l.replace(/\[|\]/g, "")
+                l = l.replace(brackets, "")
                 result = l + result
             }
             if (r) {
-                r = r.replace(/\[|\]/g, "")
+                r = r.replace(brackets, "")
                 result = result + r
             }
 

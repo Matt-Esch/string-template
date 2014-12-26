@@ -3,6 +3,7 @@ var escape = require("js-string-escape")
 
 var nargs = /\{(?:\[.+?\])?[0-9a-zA-Z]+(?:\[.+?\])?\}/g
 var nargsCap = /\{(\[.+?\])?([0-9a-zA-Z]+)(\[.+?\])?\}/g
+var brackets = /(^\[|\]$)/g
 
 var replaceTemplate =
 "    var args\n" +
@@ -43,10 +44,10 @@ function compile(string, inline) {
             fullReplacement = replacement.substring(1, replacement.length - 1)
             subReplacement = replacement.replace(nargsCap, function (match, l, i, r, index) {
                 if (l !== null && l !== undefined) {
-                    attachLeft = l.replace(/\[|\]/g, "")
+                    attachLeft = l.replace(brackets, "")
                 }
                 if (r !== null && r !== undefined) {
-                    attachRight = r.replace(/\[|\]/g, "")
+                    attachRight = r.replace(brackets, "")
                 }
                 return i
             })

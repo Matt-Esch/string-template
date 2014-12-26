@@ -265,3 +265,9 @@ test("Attach strings to multiple mixed variables in a template", function (asser
     assert.equal(result1, "Hello, Mark! You have 3 new messages. There are 7 new issues.")
     assert.end()
 })
+
+test("Allow square brackets inside an attached string", function (assert) {
+    var result1 = format("Hello{[, [ ]]0}!", "Mark")
+    assert.equal(result1, "Hello, [ ]Mark!")
+    assert.end()
+})
