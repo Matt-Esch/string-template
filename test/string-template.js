@@ -255,3 +255,13 @@ test("Attach strings to variables in template (with list of arguments)", functio
     assert.equal(result4, "Hello!")
     assert.end()
 })
+
+test("Attach strings to multiple mixed variables in a template", function (assert) {
+    var result1 = format("Hello{[, ]name}! You have {msgCount} new messages.{[ There are ]issueCount[ new issues.]}", {
+        name: "Mark",
+        msgCount: 3,
+        issueCount: 7
+    })
+    assert.equal(result1, "Hello, Mark! You have 3 new messages. There are 7 new issues.")
+    assert.end()
+})
