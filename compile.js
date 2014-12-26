@@ -1,8 +1,8 @@
 var template = require("./index")
 var escape = require("js-string-escape")
 
-var nargs = /\{(?:\[.+\])?[0-9a-zA-Z]+(?:\[.+\])?\}/g
-var nargsCap = /\{(\[.+\])?([0-9a-zA-Z]+)(\[.+\])?\}/g
+var nargs = /\{(?:\[.+?\])?[0-9a-zA-Z]+(?:\[.+?\])?\}/g
+var nargsCap = /\{(\[.+?\])?([0-9a-zA-Z]+)(\[.+?\])?\}/g
 
 var replaceTemplate =
 "    var args\n" +
