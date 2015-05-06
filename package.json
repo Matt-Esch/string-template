@@ -22,9 +22,7 @@
     "url": "https://github.com/Matt-Esch/string-template/issues",
     "email": "matt@mattesch.info"
   },
-  "dependencies": {
-    "js-string-escape": "~1.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "tape": "~1.1.1"
   },
