@@ -80,8 +80,8 @@ function compile(string, inline) {
         }
 
         var replaceCode = replace.join(" +\n    ")
-        var compiledSource = template(replaceTemplate, replaceCode)
-        return new Function(compiledSource)
+        var compiledSource = template(replaceTemplate, replaceCode);
+        return new Function(compiledSource);
     }
 
     return function template() {

@@ -1,5 +1,6 @@
-var nargs = /\{([0-9a-zA-Z]+)\}/g
 var slice = Array.prototype.slice
+
+var custom = require('./custom');
 
 module.exports = template
 
@@ -16,11 +17,13 @@ function template(string) {
         args = {}
     }
 
-    return string.replace(nargs, function replaceArg(match, i, index) {
+    var config = custom.config();
+
+    return string.replace(config.nargs, function replaceArg(match, i, index) {
         var result
 
-        if (string[index - 1] === "{" &&
-            string[index + match.length] === "}") {
+        if (string[index - 1] === config.opTag &&
+            string[index + match.length] === config.clTag) {
             return i
         } else {
             result = args.hasOwnProperty(i) ? args[i] : null
