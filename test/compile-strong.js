@@ -118,6 +118,34 @@ test("Listed arguments are replaced", function (assert) {
     assert.end()
 })
 
+test("Supports quotes", function (assert) {
+    var template = compile("Hello \"{0}, how are you?", true)
+    var result = template("Mark")
+    assert.equal(result, "Hello \"Mark, how are you?")
+    assert.end()
+})
+
+test("Supports \r", function (assert) {
+    var template = compile("Hello \r{0}, how are you?", true)
+    var result = template("Mark")
+    assert.equal(result, "Hello \rMark, how are you?")
+    assert.end()
+})
+
+test("Supports \u2028", function (assert) {
+    var template = compile("Hello \u2028{0}, how are you?", true)
+    var result = template("Mark")
+    assert.equal(result, "Hello \u2028Mark, how are you?")
+    assert.end()
+})
+
+test("Supports \u2029", function (assert) {
+    var template = compile("Hello \u2029{0}, how are you?", true)
+    var result = template("Mark")
+    assert.equal(result, "Hello \u2029Mark, how are you?")
+    assert.end()
+})
+
 test("Listed arguments at the start of strings are replaced",
     function (assert) {
         var template = compile("{0} people have liked this", true)
