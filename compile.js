@@ -114,7 +114,3 @@ function compile(string, inline) {
         return result.join("")
     }
 }
-
-function inlineConcat(token) {
-
-}
