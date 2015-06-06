@@ -1,5 +1,4 @@
 var nargs = /\{([0-9a-zA-Z]+)\}/g
-var slice = Array.prototype.slice
 
 module.exports = template
 
@@ -9,7 +8,10 @@ function template(string) {
     if (arguments.length === 2 && typeof arguments[1] === "object") {
         args = arguments[1]
     } else {
-        args = slice.call(arguments, 1)
+        args = new Array(arguments.length - 1)
+        for (var i = 1; i < arguments.length; ++i) {
+            args[i - 1] = arguments[i]
+        }
     }
 
     if (!args || !args.hasOwnProperty) {
