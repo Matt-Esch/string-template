@@ -24,7 +24,7 @@ var argTemplate = "(result = args.hasOwnProperty(\"{0}\") ? " +
 module.exports = compile
 
 function compile(string, inline) {
-    var replacements = string.match(nargs)
+    var replacements = string.match(nargs) || []
     var interleave = string.split(nargs)
     var replace = []
 
