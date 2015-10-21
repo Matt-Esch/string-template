@@ -24,13 +24,13 @@ var argTemplate = "(result = args.hasOwnProperty(\"{0}\") ? " +
 module.exports = compile
 
 function compile(string, inline) {
-    var replacements = string.match(nargs)
+    var replacements = string.match(nargs) || []
     var interleave = string.split(nargs)
     var replace = []
 
     for (var i = 0; i < interleave.length; i++) {
-        var current = interleave[i];
-        var replacement = replacements[i];
+        var current = interleave[i]
+        var replacement = replacements[i]
         var escapeLeft = current.charAt(current.length - 1)
         var escapeRight = (interleave[i + 1] || "").charAt(0)
 
@@ -41,7 +41,7 @@ function compile(string, inline) {
         if (escapeLeft === "{" && escapeRight === "}") {
             replace.push(current + replacement)
         } else {
-            replace.push(current);
+            replace.push(current)
             if (replacement) {
                 replace.push({ name: replacement })
             }
@@ -116,9 +116,8 @@ function compile(string, inline) {
 }
 
 function escape(string) {
-    string = '' + string;
-
-    return string.replace(whitespaceRegex, escapedWhitespace);
+    string = '' + string
+    return string.replace(whitespaceRegex, escapedWhitespace)
 }
 
 function escapedWhitespace(character) {

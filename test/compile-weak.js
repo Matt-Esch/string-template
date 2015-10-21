@@ -118,7 +118,6 @@ test("Listed arguments are replaced", function (assert) {
     assert.end()
 })
 
-
 test("Supports quotes", function (assert) {
     var template = compile("Hello {0}, how are you?")
     var result = template("\"Mark")
@@ -276,5 +275,12 @@ test("Allow multiple references", function (assert) {
     assert.equal(result1, "onetwothree\nonetwothree\nonetwothree")
     assert.equal(result2, "onetwothree\nonetwothree\nonetwothree")
     assert.equal(result3, "onetwothree\nonetwothree\nonetwothree")
+    assert.end()
+})
+
+test("Template string without arguments", function (assert) {
+    var template = compile("Hello, how are you?")
+    var result = template()
+    assert.equal(result, "Hello, how are you?")
     assert.end()
 })

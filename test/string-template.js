@@ -211,3 +211,9 @@ test("Allow multiple references", function (assert) {
     assert.equal(result3, "onetwothree\nonetwothree\nonetwothree")
     assert.end()
 })
+
+test("Template string without arguments", function (assert) {
+    var result = format("Hello, how are you?")
+    assert.equal(result, "Hello, how are you?")
+    assert.end()
+})
