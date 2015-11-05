@@ -1,4 +1,6 @@
-var nargs = /\{([0-9a-zA-Z]+)\}/g
+var nargs = /\{([0-9a-zA-Z\.]+)\}/g
+var slice = Array.prototype.slice
+var getProp = require('./getProp')
 
 module.exports = template
 
@@ -8,10 +10,7 @@ function template(string) {
     if (arguments.length === 2 && typeof arguments[1] === "object") {
         args = arguments[1]
     } else {
-        args = new Array(arguments.length - 1)
-        for (var i = 1; i < arguments.length; ++i) {
-            args[i - 1] = arguments[i]
-        }
+        args = slice.call(arguments, 1)
     }
 
     if (!args || !args.hasOwnProperty) {
@@ -25,7 +24,7 @@ function template(string) {
             string[index + match.length] === "}") {
             return i
         } else {
-            result = args.hasOwnProperty(i) ? args[i] : null
+            result = getProp(args, i) || null
             if (result === null || result === undefined) {
                 return ""
             }

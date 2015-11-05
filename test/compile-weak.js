@@ -104,13 +104,6 @@ test("Array arguments can be escaped", function (assert) {
     assert.end()
 })
 
-test("Array keys are not accessible", function (assert) {
-    var template = compile("Function{splice}")
-    var result = template([])
-    assert.equal(result, "Function")
-    assert.end()
-})
-
 test("Listed arguments are replaced", function (assert) {
     var template = compile("Hello {0}, how are you?")
     var result = template("Mark")

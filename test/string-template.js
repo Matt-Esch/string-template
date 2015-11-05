@@ -94,12 +94,6 @@ test("Array arguments can be escaped", function (assert) {
     assert.end()
 })
 
-test("Array keys are not accessible", function (assert) {
-    var result = format("Function{splice}", [])
-    assert.equal(result, "Function")
-    assert.end()
-})
-
 test("Listed arguments are replaced", function (assert) {
     var result = format("Hello {0}, how are you?", "Mark")
     assert.equal(result, "Hello Mark, how are you?")
@@ -215,5 +209,17 @@ test("Allow multiple references", function (assert) {
 test("Template string without arguments", function (assert) {
     var result = format("Hello, how are you?")
     assert.equal(result, "Hello, how are you?")
+    assert.end()
+})
+
+test("Template should reference nested properties", function (assert) {
+    var result = format("Hello {profile.username}", {profile: {username: "doe"}})
+    assert.equal(result, "Hello doe")
+    assert.end()
+})
+
+test("Template should reference nested array values using index", function (assert) {
+    var result = format("Hello {profile.0}, you are {profile.1} years old", {profile:['Doe',18]})
+    assert.equal(result, "Hello Doe, you are 18 years old")
     assert.end()
 })
