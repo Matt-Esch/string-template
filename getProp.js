@@ -12,7 +12,7 @@ module.exports = function(obj, path) {
       p += pathArr[++i];
     }
 
-    obj = obj[p];
+    obj = obj.hasOwnProperty(p) ? obj[p] : null;
     if (obj === undefined) {
       break;
     }

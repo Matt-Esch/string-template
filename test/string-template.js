@@ -94,6 +94,12 @@ test("Array arguments can be escaped", function (assert) {
     assert.end()
 })
 
+test("Array keys are not accessible", function (assert) {
+    var result = format("Function{splice}", [])
+    assert.equal(result, "Function")
+    assert.end()
+})
+
 test("Listed arguments are replaced", function (assert) {
     var result = format("Hello {0}, how are you?", "Mark")
     assert.equal(result, "Hello Mark, how are you?")
