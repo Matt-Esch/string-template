@@ -1,7 +1,8 @@
 var template = require("./index")
 
 var whitespaceRegex = /["'\\\n\r\u2028\u2029]/g
-var nargs = /\{[0-9a-zA-Z]+\}/g
+var nargs = /\{[0-9a-zA-Z\.]+\}/g
+var getProp = require('./getProp')
 
 var replaceTemplate =
 "    var args\n" +
@@ -104,7 +105,7 @@ function compile(string, inline) {
                 result.push(replace[i])
             } else {
                 var argName = replace[i].name
-                var arg = args.hasOwnProperty(argName) ? args[argName] : null
+                var arg = getProp(args, argName) || null
                 if (arg !== null || arg !== undefined) {
                     result.push(arg)
                 }

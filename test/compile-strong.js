@@ -284,3 +284,17 @@ test("Template string without arguments", function (assert) {
     assert.equal(result, "Hello, how are you?")
     assert.end()
 })
+
+test("Template should reference nested properties", function (assert) {
+    var template = compile("Hello {profile.username}")
+    var result = template({profile: {username: "doe"}})
+    assert.equal(result, "Hello doe")
+    assert.end()
+})
+
+test("Template should reference nested array values using index", function (assert) {
+    var template = compile("Hello {profile.0}, you are {profile.1} years old")
+    var result = template({profile:['Doe',18]})
+    assert.equal(result, "Hello Doe, you are 18 years old")
+    assert.end()
+})
