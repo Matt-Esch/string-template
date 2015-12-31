@@ -1,4 +1,4 @@
-var nargs = /\{([0-9a-zA-Z]+)\}/g
+var nargs = /\{([0-9a-zA-Z_]+)\}/g
 
 module.exports = template
 
