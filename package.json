@@ -24,6 +24,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "istanbul": "^0.4.1",
+    "opn": "^3.0.3",
     "tape": "~1.1.1"
   },
   "license": "MIT",
@@ -31,7 +33,7 @@
     "test": "node ./test/index.js",
     "travis-test": "istanbul cover ./test/index.js && ((cat coverage/lcov.info | coveralls) || exit 0)",
     "cover": "istanbul cover --report none --print detail ./test/index.js",
-    "view-cover": "istanbul report html && google-chrome ./coverage/index.html"
+    "view-cover": "istanbul report html && opn --no-wait ./coverage/index.html"
   },
   "testling": {
     "files": "test/index.js",
