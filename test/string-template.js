@@ -217,3 +217,11 @@ test("Template string without arguments", function (assert) {
     assert.equal(result, "Hello, how are you?")
     assert.end()
 })
+
+test("Template string with underscores", function (assert) {
+    var result = format("Hello {FULL_NAME}, how are you?", {
+        FULL_NAME: "James Bond"
+    })
+    assert.equal(result, "Hello James Bond, how are you?")
+    assert.end()
+})
