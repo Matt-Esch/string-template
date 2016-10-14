@@ -84,20 +84,20 @@ var greeting = greetingTemplate(["Robert", 12])
 
 ## MIT Licenced
 
-  [1]: https://secure.travis-ci.org/Matt-Esch/string-template.png
+  [1]: https://secure.travis-ci.org/Matt-Esch/string-template.svg
   [2]: https://travis-ci.org/Matt-Esch/string-template
-  [3]: https://david-dm.org/Matt-Esch/string-template.png
+  [3]: https://david-dm.org/Matt-Esch/string-template.svg
   [4]: https://david-dm.org/Matt-Esch/string-template
-  [5]: https://ci.testling.com/Matt-Esch/string-template.png
+  [5]: https://ci.testling.com/Matt-Esch/string-template.svg
   [6]: https://ci.testling.com/Matt-Esch/string-template
-  [9]: https://coveralls.io/repos/Matt-Esch/string-template/badge.png
+  [9]: https://coveralls.io/repos/Matt-Esch/string-template/badge.svg
   [10]: https://coveralls.io/r/Matt-Esch/string-template
   [13]: https://nodei.co/npm/string-template.png?downloads=true&stars=true
   [14]: https://nodei.co/npm/string-template
   [15]: http://hughsk.github.io/stability-badges/dist/unstable.svg
   [16]: http://github.com/hughsk/stability-badges
 
-  [7]: https://badge.fury.io/js/string-template.png
+  [7]: https://badge.fury.io/js/string-template.svg
   [8]: https://badge.fury.io/js/string-template
-  [11]: https://gemnasium.com/Matt-Esch/string-template.png
+  [11]: https://gemnasium.com/Matt-Esch/string-template.svg
   [12]: https://gemnasium.com/Matt-Esch/string-template
