@@ -225,3 +225,21 @@ test("Template string with underscores", function (assert) {
     assert.equal(result, "Hello James Bond, how are you?")
     assert.end()
 })
+
+test("Reject no matching substitution", function (assert) {
+    assert.throws(function() {
+      format("I am {name}. I am {age} years old",
+             {name: "Anna"}, {rejectNoMatch: true})
+    })
+    assert.end()
+})
+
+test("Allow no matching substitution", function (assert) {
+    var result
+    assert.doesNotThrow(function() {
+      result = format("I am {name}. I am {age} years old",
+             {name: "Anna"}, {rejectNoMatch: false})
+    })
+    assert.equal(result, "I am Anna. I am  years old");
+    assert.end()
+})
