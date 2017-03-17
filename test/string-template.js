@@ -8,6 +8,12 @@ test("Named arguments are replaced", function (assert) {
     assert.end()
 })
 
+test("Named arguments from flattened objects are replaced", function (assert) {
+    var result = format("Hello {user.name}, how are you?", { "user.name": "Mark" })
+    assert.equal(result, "Hello Mark, how are you?")
+    assert.end()
+})
+
 test("Named arguments at the start of strings are replaced",
     function (assert) {
         var result = format("{likes} people have liked this", {
