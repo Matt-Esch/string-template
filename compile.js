@@ -11,13 +11,13 @@ var replaceTemplate =
 "    } else {\n" +
 "        args = arguments" +
 "    }\n\n" +
-"    if (!args || !(\"hasOwnProperty\" in args)) {\n" +
+"    if (!args) {\n" +
 "       args = {}\n" +
 "    }\n\n" +
 "    return {0}"
 
 var literalTemplate = "\"{0}\""
-var argTemplate = "(result = args.hasOwnProperty(\"{0}\") ? " +
+var argTemplate = "(result = Object.prototype.hasOwnProperty.call(args, \"{0}\") ? " +
     "args[\"{0}\"] : null, \n        " +
     "(result === null || result === undefined) ? \"\" : result)"
 
@@ -93,7 +93,7 @@ function compile(string, inline) {
             args = arguments
         }
 
-        if (!args || !("hasOwnProperty" in args)) {
+        if (!args) {
             args = {}
         }
 
@@ -104,7 +104,8 @@ function compile(string, inline) {
                 result.push(replace[i])
             } else {
                 var argName = replace[i].name
-                var arg = args.hasOwnProperty(argName) ? args[argName] : null
+                var arg = Object.prototype.hasOwnProperty.call(args, argName) ?
+                    args[argName] : null
                 if (arg !== null || arg !== undefined) {
                     result.push(arg)
                 }

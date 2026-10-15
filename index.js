@@ -14,7 +14,7 @@ function template(string) {
         }
     }
 
-    if (!args || !args.hasOwnProperty) {
+    if (!args) {
         args = {}
     }
 
@@ -25,7 +25,7 @@ function template(string) {
             string[index + match.length] === "}") {
             return i
         } else {
-            result = args.hasOwnProperty(i) ? args[i] : null
+            result = Object.prototype.hasOwnProperty.call(args, i) ? args[i] : null
             if (result === null || result === undefined) {
                 return ""
             }
